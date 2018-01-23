@@ -22,6 +22,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,private productService: ProductService, private categoryService: CategoryService) {
         this.suscribe = productService.getAll().
                             switchMap(products => {
+                                console.log("entra por aqui")
                                 this.productsFilter =  this.products = products
                                 return route.queryParamMap;
                             }).subscribe( params =>{
