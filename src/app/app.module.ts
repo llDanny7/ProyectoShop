@@ -1,3 +1,7 @@
+import { ProductService } from './product.service';
+import { AdminGuard } from './admin.guard';
+import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 import { routerShopModule } from './app.router';
 import { environment } from './../environments/environment.prod';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,6 +10,7 @@ import { AngularFireModule} from 'angularfire2'
 import { AngularFireDatabaseModule} from 'angularfire2/database'
 import { AngularFireAuthModule} from 'angularfire2/auth'
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap'
+import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 
 import { AppComponent } from './app.component';
@@ -19,6 +24,9 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from 'app/auth.guard';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CategoryService } from 'app/category.service';
 
 @NgModule({
   declarations: [
@@ -32,17 +40,20 @@ import { LoginComponent } from './login/login.component';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule.forRoot(),
     routerShopModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard, AdminGuard, UserService, CategoryService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

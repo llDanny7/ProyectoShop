@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-sm-6">
+        <form [formGroup]="formProduct">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" formControlName="title" type="text" class="form-control">
+                <div class="alert alert-danger" *ngIf="title.errors && title.touched">
+                    Tite is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input id="price" type="number" formControlName="price" class="form-control">
+                </div>
+                <div class="alert alert-danger" *ngIf="price.errors && price.touched"> Price is required</div>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" class="form-control" formControlName="category">
+                    <option value=""></option>
+                    <option *ngFor="let category of categories$ | async" [value]="category.$key"> {{category.name}}</option>
+                </select>
+                <div class="alert alert-danger" *ngIf="category.errors && category.touched"> Category is required</div>
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">Image Url</label>
+                <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl">
+                <div class="alert alert-danger" *ngIf="imageUrl.errors && imageUrl.touched"> Image Url is required</div>
+            </div>
+            <button [disabled]="!formProduct.valid" class="btn btn-primary" (click)="save()">Save</button>
+            <button *ngIf="id" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+        </form>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top" [src]="imageUrl.value" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{title.value}}</h5>
+                <p class="card-text" *ngIf="price.value">{{price.value | currency:'USD':true}}</p>
+            </div>
+        </div>
+    </div>
+</div>
