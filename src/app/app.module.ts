@@ -29,6 +29,7 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
 import { CategoryService } from 'app/category.service';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 import { ProductCardComponent } from './products/product-card/product-card.component';
+import { ShoppingCartService } from 'app/shopping-cart.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { ProductCardComponent } from './products/product-card/product-card.compo
     NgbModule.forRoot(),
     routerShopModule
   ],
-  providers: [AuthService, AuthGuard, AdminGuard, UserService, CategoryService, ProductService],
+  providers: [AuthService, AuthGuard, AdminGuard, UserService, CategoryService, ProductService, ShoppingCartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
