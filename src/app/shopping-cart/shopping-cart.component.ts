@@ -18,4 +18,8 @@ export class ShoppingCartComponent implements OnInit {
         
     }
 
+    clearShoppingCart(){
+        this.shoppingCart.clearShoppingCar();
+    }
+
 }

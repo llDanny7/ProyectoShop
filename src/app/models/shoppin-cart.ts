@@ -1,16 +1,22 @@
 import { Product } from 'app/models/product';
 export class ShoppingCart {
-    items:ShoppingCartItem[] = [];
-    constructor(public itemsMap: {[key:string]:ShoppingCartItem }) {
-         
+    items: ShoppingCartItem[] = [];
+    constructor(private itemsMap: { [key: string]: ShoppingCartItem }) {
+        this.itemsMap = itemsMap || {}
         for (let productId in this.itemsMap) {
-            this.items.push( new ShoppingCartItem(this.itemsMap[productId].product, this.itemsMap[productId].quantity) );
+            let item = this.itemsMap[productId];
+            this.items.push(new ShoppingCartItem({ ...item, $key: productId }));
         }
     }
 
-    get totalPrice(){
+    getQuantityProduct(product: Product){
+        let item = this.itemsMap[product.$key];            
+        return item ? item.quantity : 0;
+    }
+
+    get totalPrice() {
         let totalPrice = 0;
-        for (let productId in this.items){
+        for (let productId in this.items) {
             totalPrice += this.items[productId].totalPrice;
         }
         return totalPrice
@@ -25,9 +31,16 @@ export class ShoppingCart {
     }
 }
 
+
 export class ShoppingCartItem {
+    $key: string;
+    title: string;
+    imageUrl: string;
+    price: number;
+    quantity: number;
 
-    constructor(public product:Product, public quantity: number ) {}
-
-    get totalPrice() { return this.product.price * this.quantity}
+    constructor(init?: Partial<ShoppingCartItem>) {
+        Object.assign(this, init);
+    }
+    get totalPrice() { return this.price * this.quantity }
 }
